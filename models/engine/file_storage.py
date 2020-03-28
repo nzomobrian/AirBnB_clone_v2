@@ -28,8 +28,11 @@ class FileStorage:
         if not cls:
             return self.__objects
         else:
-            dic_result = {o: key for o, key in self.__objects.items()
-                          if isinstance(key, cls)}
+            dic_result = {}
+            for key, val in self.__objects.items():
+                name = key.split('.')
+                if name[0] == cls.__name__:
+                    dic_result.update({key: val})
             return dic_result
 
     def new(self, obj):
@@ -64,5 +67,9 @@ class FileStorage:
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
         if obj:
-            FileStorage.__objects.pop(obj.id, None)
+            for key in self.__objects:
+                idn = key.split('.')
+                if obj.id == idn[1]:
+                    del self.__objects[key]
+                    break
             self.save()
