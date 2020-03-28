@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
                 kv = elem.split('=')
                 if len(kv) == 1 or "" in kv:
                     continue
-                if len(kv) > 0 and kv[1][0] == '"':
+                if len(kv) > 1 and kv[1][0] == '"':
                     kv[1] = kv[1].strip('"').replace('_', ' ')
                     if kv[1].count('"') != kv[1].count('\\\"'):
                         continue
