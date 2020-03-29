@@ -46,8 +46,7 @@ class DBStorage:
         session = self.__session
         dic = {}
         if not cls:
-            # tables = [User, State, City, Amenity, Place, Review]
-            tables = [User, State, City, Place, Review]
+            tables = [User, State, City, Amenity, Place, Review]
 
         else:
             if type(cls) == str:
