@@ -93,4 +93,4 @@ class Place(BaseModel, Base):
             amenity_ids
             """
             if isinstance(amenity_obj, models.Amenity):
-                self.amenities.append(obj_id.id)
+                self.amenities.append(amenity_obj.id)
