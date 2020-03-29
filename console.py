@@ -63,7 +63,6 @@ class HBNBCommand(cmd.Cmd):
 
             if dic:
                 obj = eval("{}(**dic)".format(my_list[0]))
-                storage.new(obj)
             else:
                 obj = eval("{}()".format(my_list[0]))
             obj.save()
@@ -158,6 +157,7 @@ class HBNBCommand(cmd.Cmd):
                 if name[0] == args[0]:
                     my_list.append(objects[key])
             print(my_list)
+
         except NameError:
             print("** class doesn't exist **")
 
