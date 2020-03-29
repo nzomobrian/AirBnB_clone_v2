@@ -47,7 +47,7 @@ class DBStorage:
         dic = {}
         if not cls:
             # tables = [User, State, City, Amenity, Place, Review]
-            tables = [State, City]
+            tables = [User, State, City]
 
         else:
             if type(cls) == str:
