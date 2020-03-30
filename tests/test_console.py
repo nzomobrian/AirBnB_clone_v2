@@ -8,6 +8,7 @@ import os
 import json
 import console
 import tests
+from models import storage
 from console import HBNBCommand
 from models.base_model import BaseModel
 from models.user import User
@@ -89,6 +90,33 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "[[User]", f.getvalue()[:7])
 
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd('create State name="California" lat=7.5 zip=513')
+            id = f.getvalue().strip("\n")
+        alldic = storage.all()
+        clas = "State."
+        Sname = alldic[clas + id].name
+        Slat = alldic[clas + id].lat
+        Szip = alldic[clas + id].zip
+        self.assertEqual(Sname, "California")
+        self.assertTrue(isinstance(Sname, str))
+        self.assertEqual(Slat, 7.5)
+        self.assertTrue(isinstance(Slat, float))
+        self.assertEqual(Szip, 513)
+        self.assertTrue(isinstance(Szip, int))
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd('create User name="Larry_Moon" nik="El\\"Macho"')
+            id = f.getvalue().strip("\n")
+        alldic = storage.all()
+        clas = "User."
+        Sname = alldic[clas + id].name
+        Snick = alldic[clas + id].nik
+        self.assertEqual(Sname, "Larry Moon")
+        self.assertTrue(isinstance(Sname, str))
+        self.assertEqual(Snick, 'El"Macho')
+        self.assertTrue(isinstance(Snick, str))
+
     def test_show(self):
         """Test show command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -167,25 +195,6 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
 
-    def test_z_all(self):
-        """Test alternate all command inpout"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("asdfsdfsd.all()")
-            self.assertEqual(
-                "** class doesn't exist **\n", f.getvalue())
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("State.all()")
-            self.assertEqual("[]\n", f.getvalue())
-
-    def test_z_count(self):
-        """Test count command inpout"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("asdfsdfsd.count()")
-            self.assertEqual(
-                "** class doesn't exist **\n", f.getvalue())
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd("State.count()")
-            self.assertEqual("0\n", f.getvalue())
 
     def test_z_show(self):
         """Test alternate show command inpout"""
