@@ -53,7 +53,6 @@ class DBStorage:
                 cls = eval(csl)
 
             tables = [cls]
-            query = session.query(cls).all()
 
         for t in tables:
             query = session.query(t).all()
