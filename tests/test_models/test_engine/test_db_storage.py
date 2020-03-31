@@ -2,6 +2,7 @@
 """test for console"""
 import unittest
 from unittest.mock import patch
+from io import StringIO
 
 
 @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
