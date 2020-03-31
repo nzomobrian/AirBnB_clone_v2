@@ -14,12 +14,14 @@ from models.review import Review
 from models.engine.db_storage import DBStorage
 import MySQLdb
 from unittest.mock import patch
+import os
 
 
 class TestDataBase(unittest.TestCase):
     """this will test the console"""
 
     @classmethod
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
     def startdB(self):
         self.db = MySQLdb.connect(host="localhost",
                                   user="hbnb_dev",
@@ -28,11 +30,13 @@ class TestDataBase(unittest.TestCase):
         self.cur = self.db.cursor()
 
     @classmethod
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
     def closedB(self):
         self.db.close()
         self.cur.close()
 
     @classmethod
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
     def setUpClass(self):
         """setup for the test"""
         self.env = patch.dict('os.environ',
@@ -46,12 +50,14 @@ class TestDataBase(unittest.TestCase):
             self.store = DBStorage()
             self.store.reload()
 
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
     def teardown(self):
         """at the end of the test this will tear it down"""
         self.store.close()
         self.db.close()
         self.cur.close()
 
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
     def test_create(self):
         """ Checks if row in tables are created """
 
