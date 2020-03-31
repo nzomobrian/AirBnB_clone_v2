@@ -41,7 +41,7 @@ class TestDataBase(unittest.TestCase):
                                'HBNB_MYSQL_HOST': 'localhost',
                                'HBNB_MYSQL_DB': 'hbnb_dev_db',
                                'HBNB_TYPE_STORAGE': 'db',
-                               'HBNB_ENV': 'test'})
+                               'HBNB_ENV': 'None'})
         with self.env:
             self.store = DBStorage()
             self.store.reload()
@@ -57,12 +57,12 @@ class TestDataBase(unittest.TestCase):
 
         tables = ["amenities", "cities", "places", "reviews",
                   "states", "users"]
-
+        lens = []
         TestDataBase.startdB()
         for table in tables:
             self.cur.execute("SELECT * FROM " + table + ';')
             rows = self.cur.fetchall()
-            self.assertEqual(0, len(rows))
+            lens.append(len(rows))
 
         new_state = State(name="California")
         self.store.new(new_state)
@@ -100,9 +100,13 @@ class TestDataBase(unittest.TestCase):
         TestDataBase.closedB()
         TestDataBase.startdB()
 
+        new_lens = []
         for table in tables:
             self.cur.execute("SELECT * FROM " + table + ';')
             rows = self.cur.fetchall()
-            self.assertEqual(1, len(rows))
+            new_lens.append(len(rows))
+
+        for i in range(len(new_lens)):
+            self.assertEqual(lens[i] + 1, new_lens[i])
 
         TestDataBase.closedB()
