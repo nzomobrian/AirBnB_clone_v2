@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 from io import StringIO
 from console import HBNBCommand
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.user import User
 from models.state import State
 from models.city import City
@@ -62,14 +62,15 @@ class TestDataBase(unittest.TestCase):
 
         # with self.env:
         self.store = DBStorage()
+        Base.metadata.drop_all(bind=self.store._DBStorage__engine)
         self.store.reload()
 
+    @classmethod
     @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
-    def teardown(self):
+    def teardown(cls):
         """at the end of the test this will tear it down"""
-        self.store.close()
-        self.db.close()
-        self.cur.close()
+        Base.metadata.drop_all(bind=cls.store._DBStorage__engine)
+        cls.store.close()
 
     @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
     def test_create(self):
@@ -130,3 +131,6 @@ class TestDataBase(unittest.TestCase):
             self.assertEqual(lens[i] + 1, new_lens[i])
 
         TestDataBase.closedB()
+        Base.metadata.drop_all(bind=self.store._DBStorage__engine)
+        self.store.reload()
+        self.store.close()

@@ -165,10 +165,7 @@ class TestConsole(unittest.TestCase):
             self.assertEqual("** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all State")
-            if os.getenv("HBNB_TYPE_STORAGE") != "db":
-                self.assertEqual("[]\n", f.getvalue())
-            else:
-                self.assertEqual("[[State]", f.getvalue()[:8])
+            self.assertEqual("[]\n", f.getvalue())
 
     def test_update(self):
         """Test update command inpout"""
