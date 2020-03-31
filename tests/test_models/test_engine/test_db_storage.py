@@ -64,7 +64,7 @@ class TestDataBase(unittest.TestCase):
         self.store = DBStorage()
         self.store.reload()
 
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
     def teardown(self):
         """at the end of the test this will tear it down"""
         self.store.close()

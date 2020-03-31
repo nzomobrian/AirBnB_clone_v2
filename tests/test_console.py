@@ -158,7 +158,6 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
 
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
     def test_all(self):
         """Test all command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -166,7 +165,10 @@ class TestConsole(unittest.TestCase):
             self.assertEqual("** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all State")
-            self.assertEqual("[]\n", f.getvalue())
+            if os.getenv("HBNB_TYPE_STORAGE") != "db":
+                self.assertEqual("[]\n", f.getvalue())
+            else:
+                self.assertEqual("[[State]", f.getvalue()[:8])
 
     def test_update(self):
         """Test update command inpout"""
