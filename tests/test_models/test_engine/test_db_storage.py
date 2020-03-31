@@ -15,13 +15,15 @@ from models.engine.db_storage import DBStorage
 import MySQLdb
 from unittest.mock import patch
 import os
+from os import environ
 
 
+@unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
 class TestDataBase(unittest.TestCase):
     """this will test the console"""
 
     @classmethod
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
     def startdB(self):
         self.db = MySQLdb.connect(host="localhost",
                                   user="hbnb_dev",
@@ -30,25 +32,37 @@ class TestDataBase(unittest.TestCase):
         self.cur = self.db.cursor()
 
     @classmethod
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
     def closedB(self):
         self.db.close()
         self.cur.close()
 
     @classmethod
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
     def setUpClass(self):
         """setup for the test"""
-        self.env = patch.dict('os.environ',
-                              {'HBNB_MYSQL_USER': 'hbnb_dev',
-                               'HBNB_MYSQL_PWD': 'hbnb_dev_pwd',
-                               'HBNB_MYSQL_HOST': 'localhost',
-                               'HBNB_MYSQL_DB': 'hbnb_dev_db',
-                               'HBNB_TYPE_STORAGE': 'db',
-                               'HBNB_ENV': 'None'})
-        with self.env:
-            self.store = DBStorage()
-            self.store.reload()
+
+        # sqlUser = environ.get('HBNB_MYSQL_USER')
+        # sqlPwd = environ.get('HBNB_MYSQL_PWD')
+        # sqlHost = environ.get('HBNB_MYSQL_HOST')
+        # sqlDb = environ.get('HBNB_MYSQL_DB')
+        # sqlEnv = environ.get('HBNB_ENV')
+
+        # self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+        #                              format(sqlUser, sqlPwd, sqlHost, sqlDb),
+        #                               pool_pre_ping=True)
+
+        # self.env = patch.dict('os.environ',
+        #                       {'HBNB_MYSQL_USER': 'hbnb_dev',
+        #                        'HBNB_MYSQL_PWD': 'hbnb_dev_pwd',
+        #                        'HBNB_MYSQL_HOST': 'localhost',
+        #                        'HBNB_MYSQL_DB': 'hbnb_dev_db',
+        #                        'HBNB_TYPE_STORAGE': 'db',
+        #                        'HBNB_ENV': 'None'})
+
+        # with self.env:
+        self.store = DBStorage()
+        self.store.reload()
 
     @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
     def teardown(self):
@@ -57,7 +71,7 @@ class TestDataBase(unittest.TestCase):
         self.db.close()
         self.cur.close()
 
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "No apply for db")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
     def test_create(self):
         """ Checks if row in tables are created """
 
