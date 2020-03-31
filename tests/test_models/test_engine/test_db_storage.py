@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """test for console"""
+import unittest
 
 
 @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
