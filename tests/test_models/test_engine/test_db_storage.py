@@ -4,6 +4,7 @@ import unittest
 from unittest.mock import patch
 from io import StringIO
 from console import HBNBCommand
+from models.base_model import BaseModel, Base
 
 
 @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
