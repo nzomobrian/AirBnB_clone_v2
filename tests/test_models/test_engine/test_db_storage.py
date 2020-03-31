@@ -14,6 +14,8 @@ from models.review import Review
 from models.engine.db_storage import DBStorage
 import MySQLdb
 from unittest.mock import patch
+import os
+from os import environ
 
 
 @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
