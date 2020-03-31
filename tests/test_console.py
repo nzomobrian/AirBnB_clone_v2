@@ -92,7 +92,8 @@ class TestConsole(unittest.TestCase):
                 "[[User]", f.getvalue()[:7])
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd('create State name="California" lat=7.5 zip=513')
+            self.consol.onecmd('create State name="California"\
+            lat=7.5 zip=513')
             id = f.getvalue().strip("\n")
         alldic = storage.all()
         clas = "State."
@@ -107,7 +108,8 @@ class TestConsole(unittest.TestCase):
         self.assertTrue(isinstance(Szip, int))
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd('create User name="Larry_Moon" nik="El\\"Macho"')
+            self.consol.onecmd('create User name="Larry_Moon"\
+            nik="El\\"Macho"')
             id = f.getvalue().strip("\n")
         alldic = storage.all()
         clas = "User."
@@ -195,7 +197,6 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("update User " + my_id + " Name")
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
-
 
     def test_z_show(self):
         """Test alternate show command inpout"""
