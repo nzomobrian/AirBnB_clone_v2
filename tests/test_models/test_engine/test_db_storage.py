@@ -6,6 +6,7 @@ from io import StringIO
 from console import HBNBCommand
 from models.base_model import BaseModel, Base
 from models.user import User
+from models.state import State
 
 
 @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db", "No apply for db")
