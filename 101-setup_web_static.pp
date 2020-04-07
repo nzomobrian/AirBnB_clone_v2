@@ -58,7 +58,7 @@ exec { 'exec_8':
   require     => Exec['exec_7'],
   environment => ['C=server_name _;\n\t',
                   'L=location \/hbnb_static\/ {\n\t\talias \/data\/web_static\/current\/;\n\t\tautoindex off;\n\t}'],
-  command     => 'sed -i "s/server_name _;/$C$L/" /etc/nginx/sites-enabled/default',
+  command     => 'sudo sed -i "s/server_name _;/$C$L/" /etc/nginx/sites-enabled/default',
   path        => ['/usr/bin', '/bin'],
   returns     => [0,1]
 }
