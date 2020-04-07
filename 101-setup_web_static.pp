@@ -19,7 +19,6 @@ exec { 'exec_2':
   returns => [0,1]
 }
 
-
 exec { 'exec_3':
   require => Exec['exec_2'],
   command => 'sudo mkdir -p /data/web_static/releases/test/',
