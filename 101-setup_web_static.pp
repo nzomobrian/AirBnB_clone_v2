@@ -27,7 +27,6 @@ exec { 'exec_3':
   returns => [0,1]
 }
 
-
 exec { 'exec_4':
   require => Exec['exec_3'],
   command => 'sudo touch /data/web_static/releases/test/index.html',
