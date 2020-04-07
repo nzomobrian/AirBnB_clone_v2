@@ -36,18 +36,10 @@ exec { 'exec_4':
 }
 
 exec { 'exec_5':
-  require     => Exec['exec_4'],
-  environment => ['CONTENT="\
-<html>
-  <head>
-  </head>
-  <body>
-    Holberton School
-  </body>
-</html>"'],
-  command     => 'echo "$CONTENT" | sudo tee /data/web_static/releases/test/index.html' >/dev/null
-  path        => ['/usr/bin', '/bin'],
-  returns     => [0,1]
+  require => Exec['exec_4'],
+  command => 'echo "Holberton School" | sudo tee /data/web_static/releases/test/index.html >/dev/null',
+  path    => ['/usr/bin', '/bin'],
+  returns => [0,1]
 }
 
 exec { 'exec_6':
@@ -66,9 +58,9 @@ exec { 'exec_7':
 
 exec { 'exec_8':
   require     => Exec['exec_7'],
-  environment => ['C="server_name _;\n\t"',
-                  'L="location \/hbnb_static\/ {\n\t\talias \/data\/web_static\/current\/;\n\t\tautoindex off;\n\t}"'],
-  command     => 'sed -i "s/server_name _;/$C$L/" /etc/nginx/sites-enabled/default'
+  environment => ['C=server_name _;\n\t',
+                  'L=location \/hbnb_static\/ {\n\t\talias \/data\/web_static\/current\/;\n\t\tautoindex off;\n\t}'],
+  command     => 'sed -i "s/server_name _;/$C$L/" /etc/nginx/sites-enabled/default',
   path        => ['/usr/bin', '/bin'],
   returns     => [0,1]
 }
