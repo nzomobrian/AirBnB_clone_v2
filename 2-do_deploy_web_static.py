@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Compress before sending """
+""" Deploy Archive """
 from fabric.api import *
 from datetime import datetime
 from os import path
