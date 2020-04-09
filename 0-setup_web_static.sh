@@ -26,6 +26,6 @@ cont="server_name _;\n\t"
 
 loc="location \/hbnb_static\/ {\n\t\talias \/data\/web_static\/current\/;\n\t\tautoindex off;\n\t}"
 
-sed -i "s/server_name _;/$cont$loc/" /etc/nginx/sites-enabled/default
+sed -i "s/server_name _;/$cont$loc/" /etc/nginx/sites-available/default
 service nginx restart
 exit 0
