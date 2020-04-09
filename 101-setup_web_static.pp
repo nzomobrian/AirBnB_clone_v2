@@ -42,29 +42,36 @@ exec { 'exec_5':
 
 exec { 'exec_6':
   require => Exec['exec_5'],
+  command => 'rm -rf /data/web_static/current',
+  path    => ['/usr/bin', '/bin', '/usr/sbin'],
+  returns => [0,1]
+}
+
+
+exec { 'exec_7':
+  require => Exec['exec_6'],
   command => 'sudo ln -sf /data/web_static/releases/test/ /data/web_static/current',
   path    => ['/usr/bin', '/bin', '/usr/sbin'],
   returns => [0,1]
 }
 
-exec { 'exec_7':
-  require => Exec['exec_6'],
+exec { 'exec_8':
+  require => Exec['exec_7'],
   command => 'sudo chown -R ubuntu:ubuntu /data/',
   path    => ['/usr/bin', '/bin', '/usr/sbin'],
   returns => [0,1]
 }
 
-exec { 'exec_8':
-  require     => Exec['exec_7'],
-  environment => ['C=server_name _;\n\t',
-                  'L=location \/hbnb_static\/ {\n\t\talias \/data\/web_static\/current\/;\n\t\tautoindex off;\n\t}'],
-  command     => 'sudo sed -i "s/server_name _;/$C$L/" /etc/nginx/sites-enabled/default',
+exec { 'exec_9':
+  require     => Exec['exec_8'],
+  environment => ['C=\\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t\tautoindex off;\n\t}\n'],
+  command     => 'sudo sed -i "38i $C" /etc/nginx/sites-available/default',
   path        => ['/usr/bin', '/bin'],
   returns     => [0,1]
 }
 
-exec { 'exec_9':
-  require => Exec['exec_8'],
+exec { 'exec_10':
+  require => Exec['exec_9'],
   command => 'sudo service nginx restart',
   path    => ['/usr/bin', '/bin', '/usr/sbin'],
   returns => [0,1]
