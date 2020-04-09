@@ -9,10 +9,9 @@ rm -rf /data/web_static/current
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu /data/
 
-cont="server_name _;\n\t"
 
-loc="location \/hbnb_static\/ {\n\t\talias \/data\/web_static\/current\/;\n\t\tautoindex off;\n\t}"
+loc="\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t\tautoindex off;\n\t}\n"
 
-sed -i "s/server_name _;/$cont$loc/" /etc/nginx/sites-available/default
+sudo sed -i "38i $loc" /etc/nginx/sites-available/default
 service nginx restart
 exit 0
