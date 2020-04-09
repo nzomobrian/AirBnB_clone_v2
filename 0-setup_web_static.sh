@@ -2,12 +2,8 @@
 # Prepare Web Server
 apt-get update -y
 apt-get install nginx -y
-mkdir -p /data/
-mkdir -p /data/web_static/
-mkdir -p /data/web_static/releases/
 mkdir -p /data/web_static/shared/
 mkdir -p /data/web_static/releases/test/
-touch /data/web_static/releases/test/index.html
 
 CONTENT="\
 <html>
