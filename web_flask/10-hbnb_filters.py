@@ -18,8 +18,8 @@ def close_db(error):
 
 
 @app.route('/hbnb_filters', strict_slashes=False)
-def states_state():
-    """ displays a HTML page with a list of cities by states """
+def hbnb_filter():
+    """ HBNB filters """
     states = storage.all(State).values()
     states = sorted(states, key=lambda k: k.name)
     st_ct = []
