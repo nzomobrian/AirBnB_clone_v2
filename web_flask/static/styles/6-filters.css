@@ -59,10 +59,13 @@ button:hover {
     background: #FAFAFA;
     padding-bottom: 15px;
     height: 300px;
-    overflow-y: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    max-height: 300px;
 }
-.popover:hover {
-    overflow-y: auto;
+
+.popover::-webkit-scrollbar{
+    width: 0px;
 }
 
 .amenities .popover {
