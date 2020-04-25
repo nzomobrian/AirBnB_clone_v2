@@ -84,11 +84,13 @@ button:hover {
     padding-left: 10px;
 }
 .popover ul li{
-    padding: 3px;
+    padding: 4px;
     padding-left: 10px;
 }
 
 .popover ul h2{
+    margin-top: 1.5%;
+    margin-bottom: 5%;
     margin-left: 0px;
 }
 
